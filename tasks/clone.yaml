@@ -1,0 +1,53 @@
+---
+
+- name: Create YUM repo file ({{ repo.name }})
+  yum_repository:
+    name: "{{ repo.name }}"
+    description: "{{ repo.description }}"
+    baseurl: "{{ repo.baseurl }}"
+    gpgcheck: "{{ repo.gpgcheck | default(omit) }}"
+    gpgkey: "{{ repo.gpgkey | default(omit) }}"
+  args: "{{ repo.params }}"
+  tags:
+    - clone_yumrepo_repofile
+
+- name: Sync YUM repo ({{ repo.name }})
+  command: >
+    reposync
+      {{ repo.reposync_options | default(clone_yumrepo_reposync_options) }}
+      --download_path={{ clone_yumrepo_clonepath }}
+      --repoid={{ repo.name }}
+  tags:
+    - clone_yumrepo_reposync
+
+- name: Create YUM repo files ({{ repo.name }})
+  command: >
+    createrepo
+      {{ repo.createrepo_options | default(clone_yumrepo_createrepo_options) }}
+      {{ clone_yumrepo_clonepath }}/{{ repo.name }}
+  tags:
+    - clone_yumrepo_createrepo
+
+- name: Create base dir for symlink ({{ repo.name }})
+  file:
+    path: "{{ (clone_yumrepo_webpath ~ '/' ~ repo.path) | dirname }}"
+    state: directory
+  tags:
+    - clone_yumrepo_symlink
+
+- name: Create symlink ({{ repo.name }})
+  file:
+    src: "{{ clone_yumrepo_clonepath }}/{{ repo.name }}"
+    dest: "{{ clone_yumrepo_webpath }}/{{ repo.path }}"
+    state: link
+  tags:
+    - clone_yumrepo_symlink
+
+- name: Download GPG key ({{ repo.name }})
+  get_url:
+    url: "{{ repo.gpgkey }}"
+    dest: "{{ clone_yumrepo_webpath }}/{{ repo.key_filename | default('GPG-KEY-' ~ repo.name) }}"
+  when: >
+    'gpgkey' in repo
+  tags:
+    - clone_yumrepo_gpgkey

@@ -1,0 +1,16 @@
+---
+
+- name: Install packages
+  package:
+    name: "{{ item }}"
+  loop: "{{ clone_yumrepo_pkgs }}"
+  tags:
+    - clone_yumrepo_pkg
+
+- include: clone.yaml
+  when: >
+    clone_yumrepo_limit | length == 0 or
+    repo.name in clone_yumrepo_limit
+  loop: "{{ clone_yumrepo_repos }}"
+  loop_control:
+    loop_var: repo
