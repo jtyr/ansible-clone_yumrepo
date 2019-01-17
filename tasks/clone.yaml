@@ -7,7 +7,7 @@
     baseurl: "{{ repo.baseurl }}"
     gpgcheck: "{{ repo.gpgcheck | default(omit) }}"
     gpgkey: "{{ repo.gpgkey | default(omit) }}"
-  args: "{{ repo.params }}"
+  args: "{{ repo.params | default({})}}"
   tags:
     - clone_yumrepo_repofile
 
