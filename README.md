@@ -76,6 +76,15 @@ Examples
     - nginx
 ```
 
+The above example clones the repos into `/srv/yumrepo` and distributes it via
+Nginx on port 80. It's possible to run the whole play again to update all repos
+or it's possible to update only a specific repo by specifying an extra variable
+`clone_yumrepo_limit` as shown bellow:
+
+```shell
+ansible-playbook -l myhost1 -i hosts -e '{ clone_yumrepo_limit: [ curator ] }' site.yaml
+```
+
 
 Role variables
 --------------
