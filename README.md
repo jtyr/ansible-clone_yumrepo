@@ -36,6 +36,9 @@ Examples
         gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         key_filename: GPG-KEY-elastic
         path: el/7/elastic/elk/6.x
+        # This will remove the existing repo definition and cloned files and
+        # directories
+        state: absent
 
       - name: grafana
         description: Grafana YUM repo
@@ -73,8 +76,8 @@ Examples
 
 The above example clones the repos into `/srv/yumrepo` and distributes it via
 Nginx on port 80. It's possible to run the whole play again to update all repos
-or it's possible to update only a specific repo by specifying an extra variable
-`clone_yumrepo_limit` as shown bellow:
+or it's possible to update or remove only a specific repo by specifying an extra
+variable `clone_yumrepo_limit` as shown bellow:
 
 ```shell
 ansible-playbook -l myhost1 -i hosts -e '{ clone_yumrepo_limit: [ curator ] }' site.yaml

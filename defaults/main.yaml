@@ -5,6 +5,10 @@ clone_yumrepo_pkgs:
   - yum-utils
   - createrepo
 
+# Automatically prepend each repo name with this string to avoid collisions with
+# already existing repo files
+clone_yumrepo_reponame_prefix: clone-
+
 # Limit execution to specific repos only
 clone_yumrepo_limit: []
 
