@@ -26,40 +26,35 @@ Examples
       - name: curator
         description: Elasticsearch Curator YUM repo
         baseurl: https://packages.elastic.co/curator/5/centos/7
-        gpgcheck: 1
         gpgkey: https://packages.elastic.co/GPG-KEY-elasticsearch
         key_filename: GPG-KEY-elastic
-        path: "el/7/elastic/curator/5"
+        path: el/7/elastic/curator/5
 
       - name: elasticsearch
         description: Elasticsearch YUM repo
         baseurl: https://artifacts.elastic.co/packages/6.x/yum
-        gpgcheck: 1
         gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         key_filename: GPG-KEY-elastic
-        path: "el/7/elastic/elk/6.x"
+        path: el/7/elastic/elk/6.x
 
       - name: grafana
         description: Grafana YUM repo
         baseurl: https://packages.grafana.com/oss/rpm
-        gpgcheck: 1
         gpgkey: https://packages.grafana.com/gpg.key
-        path: "el/7/grafana"
+        path: el/7/grafana
 
       - name: prometheus
         description: Promeheus YUM repo
         baseurl: https://packagecloud.io/prometheus-rpm/release/el/7/x86_64
-        gpgcheck: 1
         gpgkey: https://raw.githubusercontent.com/lest/prometheus-rpm/master/RPM-GPG-KEY-prometheus-rpm
-        path: "el/7/prometheus"
+        path: el/7/prometheus
 
       - name: telegraf
         description: InfluxData Telegraf YUM repo
         baseurl: https://repos.influxdata.com/centos/7/x86_64/stable
-        gpgcheck: 1
         gpgkey: https://repos.influxdata.com/influxdb.key
         key_filename: GPG-KEY-influxdata
-        path: "el/7/influxdata"
+        path: el/7/influxdata
 
     # Optionally use Nginx to expose the repos via HTTP
     nginx_vhost_config:
